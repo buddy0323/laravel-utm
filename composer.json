@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/contracts": "^10.7"
+        "illuminate/contracts": "^9.0|^10.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.16",

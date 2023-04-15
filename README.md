@@ -1,9 +1,9 @@
 ####This package is an updated fork of [spatie/laravel-utm-forwarder](https://github.com/spatie/laravel-utm-forwarder)
 # Keeps track of UTMs and/or other parameters
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-analytics-tracker.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-analytics-tracker)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-analytics-tracker/run-tests?label=tests)](https://github.com/spatie/laravel-analytics-tracker/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-analytics-tracker.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-analytics-tracker)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/adzbuck/laravel-utm.svg?style=flat-square)](https://packagist.org/packages/adzbuck/laravel-utm)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/adzbuck/laravel-utm/run-tests?label=Tests)](https://github.com/adzbuck/laravel-utm/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/adzbuck/laravel-utm.svg?style=flat-square)](https://packagist.org/packages/adzbuck/laravel-utm)
 
 This package allows you to easily track first and last touch query parameters and headers via session. You can then easily access these parameters so you can add them to a form submission or a link to another domain you track.
 

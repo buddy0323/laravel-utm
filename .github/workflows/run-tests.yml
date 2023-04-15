@@ -20,7 +20,7 @@ jobs:
           - laravel: 9.*
             contracts: 9.*
             testbench: 7.*
-            phpunit: 10.*
+            phpunit: 9.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 

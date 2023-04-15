@@ -1,27 +1,18 @@
-## UNFINISHED & NOT ON PACKAGIST!
-
-# Keeps track of the original UTM (or other analytics) parameters
+####This package is an updated fork of [spatie/laravel-utm-forwarder](https://github.com/spatie/laravel-utm-forwarder)
+# Keeps track of UTMs and/or other parameters
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-analytics-tracker.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-analytics-tracker)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-analytics-tracker/run-tests?label=tests)](https://github.com/spatie/laravel-analytics-tracker/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-analytics-tracker.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-analytics-tracker)
 
-Cross domain analytics is hard. This package helps you to keep track of the visitor's original UTM parameters, referer header and other analytics parameters. You can then submit these parameters along with a form submission or add them to a link to another domain you track.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-utm-forwarder.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-utm-forwarder)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+This package allows you to easily track first and last touch query parameters and headers via session. You can then easily access these parameters so you can add them to a form submission or a link to another domain you track.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require spatie/laravel-analytics-tracker
+composer require adzbuck/laravel-utm
 ```
 
 The package works via a middleware that needs to be added to the `web` stack in your `kernel.php` file. Make sure to register this middleware after the `StartSession` middleware.
@@ -34,8 +25,7 @@ protected $middlewareGroups = [
         // ...
         \Illuminate\Session\Middleware\StartSession::class,
         // ...
-
-        \Spatie\AnalyticsTracker\Middleware\TrackAnalyticsParametersMiddleware::class,
+        \Adzbuck\LaravelUTM\Middleware\ParameterTrackerMiddleware::class,
     ],
 ];
 ```
@@ -43,51 +33,68 @@ protected $middlewareGroups = [
 To configure the tracked parameters or how they're mapped on the URL parameters, you can publish the config file using:
 
 ```bash
-php artisan vendor:publish --provider="Spatie\AnalyticsTracker\AnalyticsTrackerServiceProvider"
+php artisan vendor:publish --provider="Adzbuck\LaravelUTM\ServiceProvider"
 ```
 
 This is the contents of the published config file:
 
 ```php
+use Adzbuck\LaravelUTM\Sources;
+
 return [
     /*
      * These are the analytics parameters that will be tracked when a user first visits
      * the application. The configuration consists of the parameter's key and the
      * source to extract this key from.
      *
-     * Available sources can be found in the `\Spatie\AnalyticsTracker\Sources` namespace.
+     * Available sources can be found in the `\Adzbuck\LaravelUTM\Sources` namespace.
      */
     'tracked_parameters' => [
         [
             'key' => 'utm_source',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'utm_medium',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'utm_campaign',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'utm_term',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'utm_content',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'referer',
-            'source' => Spatie\AnalyticsTracker\Sources\CrossOriginRequestHeader::class,
+            'source' => Sources\CrossOriginRequestHeader::class,
         ],
     ],
 
     /**
-     * We'll put the tracked parameters in the session using this key.
+     * We'll put the first touch tracked parameters in the session using this key.
      */
-    'session_key' => 'tracked_analytics_parameters',
+    'first_touch_session_key' => 'laravel_utm_parameters_first',
+
+    /**
+     * We'll put the last touch tracked parameters in the session using this key.
+     */
+    'last_touch_session_key' => 'laravel_utm_parameters_last',
+
+    /**
+     * If we should keep track of the first touch utm params
+     */
+    'first_touch' => true,
+
+    /**
+     * If we should keep track of the last touch utm params
+     */
+    'last_touch' => true,
 
     /*
      * When formatting an URL to add the tracked parameters we'll use the following
@@ -108,22 +115,113 @@ return [
 
 ## Usage
 
-The easiest way to retrieve the tracked parameters is by resolving the `TrackedAnalyticsParameters` class:
+There are three methods of tracking:
+
+<dl>
+  <dt>getFirstTouch</dt>
+  <dd>This will get the parameters from the users first visit.</dd>
+
+  <dt>getLastTouch</dt>
+  <dd>This will get the parameters from the users last visit.</dd>
+
+  <dt>getCurrent</dt>
+  <dd>This will get the parameters from the current request.</dd>
+</dl>
+
+The easiest way to retrieve the tracked parameters is by resolving the `ParameterTracker` class:
 
 ```php
-use Spatie\AnalyticsTracker\AnalyticsBag;
+use Adzbuck\LaravelUTM\ParameterTracker;
 
-app(AnalyticsBag::class)->get(); // returns an array of tracked parameters
+// returns an array of the first touch tracked parameters
+$parameterTracker = app(ParameterTracker::class)
+
+$parameterTracker->getFirstTouch();
+$parameterTracker->getLastTouch();
+$parameterTracker->getCurrent();
 ```
+
 
 You can also decorate an existing URL with the tracked parameters. This is useful to forward analytics to another domain you're running analytics on.
 
+The example uses three requests:
+```
+First request:
+https://mywebshop.com/?utm_source=facebook&utm_campaign=blogpost
+
+2nd Request:
+https://mywebshop.com/?utm_source=google&utm_campaign=blogpost
+
+Current Request:
+https://mywebshop.com/
+```
+
+##### decorateUrl/@trackedUrl
+This does not use the  session tracking, it simply uses the params provided.
 ```blade
-<a href="{{ app(\Spatie\AnalyticsTracker\AnalyticsTracker::class)->decorateUrl('https://mywebshop.com/') }}">
+<?php
+use Adzbuck\LaravelUTM\DecorateURL;
+?>
+
+<a href="{{ DecorateURL::decorateUrl('https://mywebshop.com/', ['utm_source' => 'google']) }}">
     Buy this product on our webshop
 </a>
 
-Will link to https://mywebshop.com?utm_source=facebook&utm_campaign=blogpost
+-- or --
+
+<a href="@trackedUrl('https://mywebshop.com/', ['utm_source' => 'google'])">
+    Buy this product on our webshop
+</a>
+
+Will link to https://mywebshop.com?utm_source=google
+```
+
+##### decorateUrlFromFirstTouch/@trackedUrlFromFirstTouch
+This adds the parameters from the users first visit. You can also add extra params via an array as the second parameter.
+```
+<a href="{{ DecorateURL::decorateUrlFromFirstTouch('https://mywebshop.com/', ['extra_param' => 'test']) }}">
+    Buy this product on our webshop
+</a>
+
+-- or --
+
+<a href="@trackedUrlFromFirstTouch('https://mywebshop.com/', ['extra_param' => 'test'])">
+    Buy this product on our webshop
+</a>
+
+Will link to https://mywebshop.com?utm_source=facebook&utm_campaign=blogpost&extra_param=test
+```
+
+##### decorateUrlFromLastTouch/@trackedUrlFromLastTouch
+This adds the parameters from the users Last visit. You can also add extra params via an array as the second parameter.
+```
+<a href="{{ DecorateURL::decorateUrlFromLastTouch('https://mywebshop.com/', ['extra_param' => 'test']) }}">
+    Buy this product on our webshop
+</a>
+
+-- or --
+
+<a href="@trackedUrlFromLastTouch('https://mywebshop.com/', ['extra_param' => 'test'])">
+    Buy this product on our webshop
+</a>
+
+Will link to https://mywebshop.com?utm_source=facebook&utm_campaign=blogpost&extra_param=test
+```
+
+##### decorateUrlFromCurrent/@trackedUrlFromCurrent
+This adds the parameters from the users Last visit. You can also add extra params via an array as the second parameter.
+```
+<a href="{{ DecorateURL::decorateUrlFromCurrent('https://mywebshop.com/', ['extra_param' => 'test']) }}">
+    Buy this product on our webshop
+</a>
+
+-- or --
+
+<a href="@trackedUrlFromCurrent('https://mywebshop.com/', ['extra_param' => 'test'])">
+    Buy this product on our webshop
+</a>
+
+Will link to https://mywebshop.com?utm_source=google&utm_campaign=blogpost&extra_param=test
 ```
 
 ## Testing
@@ -136,18 +234,9 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
 ## Credits
 
 - [Alex Vanderbist](https://github.com/AlexVanderbist)
-- [All Contributors](../../contributors)
 
 ## License
 

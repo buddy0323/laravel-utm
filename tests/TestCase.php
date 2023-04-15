@@ -1,16 +1,16 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Tests;
+namespace Adzbuck\LaravelUTM\Tests;
 
+use Adzbuck\LaravelUTM\ServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\AnalyticsTracker\AnalyticsTrackerServiceProvider;
 
 class TestCase extends Orchestra
 {
     protected function getPackageProviders($app)
     {
         return [
-            AnalyticsTrackerServiceProvider::class,
+            ServiceProvider::class,
         ];
     }
 }

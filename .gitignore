@@ -1,7 +1,9 @@
 .idea
 .php_cs
-.php_cs.cache
+.php-cs-fixer.cache
 .phpunit.result.cache
+.phpunit.cache
+.vscode
 build
 composer.lock
 coverage

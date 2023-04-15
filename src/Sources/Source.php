@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Sources;
+namespace Adzbuck\LaravelUTM\Sources;
 
 use Illuminate\Http\Request;
 

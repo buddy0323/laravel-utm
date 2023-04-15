@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Tests\Sources;
+namespace Adzbuck\LaravelUTM\Tests\Sources;
 
 use Illuminate\Http\Request;
-use Spatie\AnalyticsTracker\Sources\RequestParameter;
-use Spatie\AnalyticsTracker\Tests\TestCase;
+use Adzbuck\LaravelUTM\Tests\TestCase;
+use Adzbuck\LaravelUTM\Sources\RequestParameter;
 
 class RequestParameterTest extends TestCase
 {

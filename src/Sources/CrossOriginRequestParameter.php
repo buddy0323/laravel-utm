@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Sources;
+namespace Adzbuck\LaravelUTM\Sources;
 
-use Spatie\AnalyticsTracker\Helpers\Request;
+use Adzbuck\LaravelUTM\Helpers\Request;
 
 class CrossOriginRequestParameter extends RequestParameter
 {

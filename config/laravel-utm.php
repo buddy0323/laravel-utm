@@ -1,4 +1,5 @@
 <?php
+use Adzbuck\LaravelUTM\Sources;
 
 return [
     /*
@@ -6,39 +7,54 @@ return [
      * the application. The configuration consists of the parameter's key and the
      * source to extract this key from.
      *
-     * Available sources can be found in the `\Spatie\AnalyticsTracker\Sources` namespace.
+     * Available sources can be found in the `\Adzbuck\LaravelUTM\Sources` namespace.
      */
     'tracked_parameters' => [
         [
             'key' => 'utm_source',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'utm_medium',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'utm_campaign',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'utm_term',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'utm_content',
-            'source' => Spatie\AnalyticsTracker\Sources\RequestParameter::class,
+            'source' => Sources\RequestParameter::class,
         ],
         [
             'key' => 'referer',
-            'source' => Spatie\AnalyticsTracker\Sources\CrossOriginRequestHeader::class,
+            'source' => Sources\CrossOriginRequestHeader::class,
         ],
     ],
 
     /**
-     * We'll put the tracked parameters in the session using this key.
+     * We'll put the first touch tracked parameters in the session using this key.
      */
-    'session_key' => 'tracked_analytics_parameters',
+    'first_touch_session_key' => 'laravel_utm_parameters_first',
+
+    /**
+     * We'll put the last touch tracked parameters in the session using this key.
+     */
+    'last_touch_session_key' => 'laravel_utm_parameters_last',
+
+    /**
+     * If we should keep track of the first touch utm params
+     */
+    'first_touch' => true,
+
+    /**
+     * If we should keep track of the last touch utm params
+     */
+    'last_touch' => true,
 
     /*
      * When formatting an URL to add the tracked parameters we'll use the following

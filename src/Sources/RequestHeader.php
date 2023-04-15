@@ -1,19 +1,16 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Sources;
+namespace Adzbuck\LaravelUTM\Sources;
 
 use Illuminate\Http\Request;
 
 class RequestHeader
 {
-    protected Request $request;
-
-    public function __construct(Request $request)
+    public function __construct(protected Request $request)
     {
-        $this->request = $request;
     }
 
-    public function get(string $key): ?string
+    public function get(string $key): array|string|null
     {
         return $this->request->header($key);
     }

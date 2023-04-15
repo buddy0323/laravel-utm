@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Sources;
+namespace Adzbuck\LaravelUTM\Sources;
 
-use Spatie\AnalyticsTracker\Helpers\Request;
+use Adzbuck\LaravelUTM\Helpers\Request;
 
 class CrossOriginRequestHeader extends RequestHeader
 {
-    public function get(string $key): ?string
+    public function get(string $key): array|string|null
     {
         if (! Request::isCrossOrigin($this->request)) {
             return null;

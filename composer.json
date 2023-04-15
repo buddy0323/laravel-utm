@@ -1,11 +1,12 @@
 {
-    "name": "spatie/laravel-analytics-tracker",
-    "description": "Keeps track of the original UTM parameters",
+    "name": "adzbuck/laravel-utm",
+    "description": "Keeps track of the UTM parameters",
     "keywords": [
         "spatie",
-        "laravel-utm-forwarder"
+        "adzbuck",
+        "laravel-utm"
     ],
-    "homepage": "https://github.com/spatie/laravel-utm-forwarder",
+    "homepage": "https://github.com/adzbuck/laravel-utm",
     "license": "MIT",
     "authors": [
         {
@@ -13,26 +14,31 @@
             "email": "alex.vanderbist@gmail.com",
             "homepage": "https://spatie.be",
             "role": "Developer"
+        },
+        {
+            "name": "Adam Buckley",
+            "email": "adzbuck@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4",
-        "illuminate/contracts": "^8.0"
+        "php": "^8.1",
+        "illuminate/contracts": "^10.7"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.11"
+        "friendsofphp/php-cs-fixer": "^3.16",
+        "orchestra/testbench": "^8.3",
+        "phpunit/phpunit": "^10.0",
+        "vimeo/psalm": "^5.9"
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\AnalyticsTracker\\": "src"
+            "Adzbuck\\LaravelUTM\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\AnalyticsTracker\\Tests\\": "tests"
+            "Adzbuck\\LaravelUTM\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -47,7 +53,7 @@
     "extra": {
         "laravel": {
             "providers": [
-              "AnalyticsTrackerServiceProvider"
+              "Adzbuck\\LaravelUTM\\ServiceProvider"
             ]
         }
     },

@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Helpers;
+namespace Adzbuck\LaravelUTM\Helpers;
 
 class Url
 {
     public static function host(string $url): ?string
     {
-        return parse_url($url,  PHP_URL_HOST);
+        return parse_url($url, PHP_URL_HOST);
     }
 
     public static function addParameters(string $url, array $parameters = []): string
@@ -15,10 +15,53 @@ class Url
             return $url;
         }
 
-        $queryString = http_build_query($parameters);
+        $parsedUrl = parse_url($url);
+        parse_str($parsedUrl['query'] ?? '', $parsedQuery);
 
-        $glue = parse_url($url, PHP_URL_QUERY) ? '&' : '?';
+        $queryArr = array_merge(
+            $parsedQuery,
+            $parameters
+        );
 
-        return "{$url}{$glue}{$queryString}";
+        $parsedUrl['query'] = http_build_query($queryArr);
+
+        return static::unparseUrl($parsedUrl);
+    }
+
+    public static function unparseUrl(array $parsed): string
+    {
+        $url = '';
+
+        if ($parsed['host'] ?? false) {
+            $url .= $parsed['scheme'] ? $parsed['scheme'].'://' : '//';
+
+            if ($parsed['user'] ?? false) {
+                $url .= $parsed['user'];
+
+                if ($parsed['pass'] ?? false) {
+                    $url .= ':'.$parsed['pass'];
+                }
+
+                $url .= '@';
+            }
+
+            $url .= $parsed['host'];
+
+            if ($parsed['port'] ?? false) {
+                $url .= ':'.$parsed['port'];
+            }
+        }
+
+        $url .= $parsed['path'] ?? '';
+
+        if ($parsed['query'] ?? false) {
+            $url .= '?'.$parsed['query'];
+        }
+
+        if ($parsed['fragment'] ?? false) {
+            $url .= '#'.$parsed['fragment'];
+        }
+
+        return $url;
     }
 }

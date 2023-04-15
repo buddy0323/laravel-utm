@@ -1,10 +1,12 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Helpers;
+namespace Adzbuck\LaravelUTM\Helpers;
+
+use Illuminate\Http\Request as IlluminateRequest;
 
 class Request
 {
-    public static function isCrossOrigin(\Illuminate\Http\Request $request): bool
+    public static function isCrossOrigin(IlluminateRequest $request): bool
     {
         $refererHost = Url::host($request->header('referer') ?? '');
 

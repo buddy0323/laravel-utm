@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\AnalyticsTracker\Tests\Sources;
+namespace Adzbuck\LaravelUTM\Tests\Sources;
 
 use Illuminate\Http\Request;
-use Spatie\AnalyticsTracker\Sources\CrossOriginRequestHeader;
-use Spatie\AnalyticsTracker\Tests\TestCase;
+use Adzbuck\LaravelUTM\Tests\TestCase;
+use Adzbuck\LaravelUTM\Sources\CrossOriginRequestHeader;
 
 class CrossOriginRequestHeaderTest extends TestCase
 {

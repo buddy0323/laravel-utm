@@ -11,7 +11,7 @@ class RouteMethods
     public function laravelUTM(): Closure
     {
         return function () {
-            $this->get('login', fn() => '')->name('laravel-utm');
+            $this->get('utm', fn() => '')->name('laravel-utm');
         };
     }
 }

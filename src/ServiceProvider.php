@@ -11,7 +11,7 @@ use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 class ServiceProvider extends IlluminateServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         Blade::directive('trackedUrl', function (string $expression) {
             return "<?php echo \Adzbuck\LaravelUTM\DecorateURL::decorateUrl({$expression}); ?>";
@@ -40,7 +40,7 @@ class ServiceProvider extends IlluminateServiceProvider
         Route::mixin(new RouteMethods);
     }
 
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-utm.php', 'laravel-utm');
 
@@ -52,6 +52,10 @@ class ServiceProvider extends IlluminateServiceProvider
                 config('laravel-utm.first_touch_session_key'),
                 config('laravel-utm.last_touch_session_key'),
             );
+        });
+
+        $this->app->bind('laravelUTM', function() {
+            return new laravelUTM;
         });
     }
 }

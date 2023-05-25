@@ -12,7 +12,7 @@ class ParameterTrackerMiddleware
     {
     }
 
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Request
     {
         $this->parameterTracker->handle();
 

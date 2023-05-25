@@ -16,7 +16,7 @@ class ParameterTracker
     ) {
     }
 
-    public function handle()
+    public function handle(): void
     {
         if (! $this->firstTouchSessionKey && ! $this->lastTouchSessionKey) {
             return;

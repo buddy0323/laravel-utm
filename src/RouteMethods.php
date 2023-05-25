@@ -1,13 +1,14 @@
 <?php
 
 namespace Adzbuck\LaravelUTM;
+use Closure;
 
 /**
  * @mixin \Illuminate\Routing\Router
  */
 class RouteMethods
 {
-    public function utmTracking()
+    public function laravelUTM(): Closure
     {
         return function () {
             $this->get('login', fn() => '')->name('laravel-utm');

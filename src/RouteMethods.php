@@ -3,7 +3,7 @@
 namespace Adzbuck\LaravelUTM;
 
 /**
- * @mixin \Illuminate\Routing\Route
+ * @mixin \Illuminate\Routing\Router
  */
 class RouteMethods
 {

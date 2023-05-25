@@ -57,5 +57,7 @@ class ServiceProvider extends IlluminateServiceProvider
         $this->app->bind('laravelUTM', function() {
             return new laravelUTM;
         });
+
+        $this->app->alias('laravelUTM', laravelUTM::class);
     }
 }

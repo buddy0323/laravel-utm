@@ -2,13 +2,12 @@
 
 namespace Adzbuck\LaravelUTM;
 
-use Adzbuck\LaravelUTM\DecorateURL;
+use Illuminate\Support\Facades\Route;
 use Adzbuck\LaravelUTM\ParameterTracker;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
-use Illuminate\View\Compilers\BladeCompiler;
 
 class ServiceProvider extends IlluminateServiceProvider
 {
@@ -37,6 +36,8 @@ class ServiceProvider extends IlluminateServiceProvider
             ],
             'config'
         );
+
+        Route::mixin(new RouteMethods);
     }
 
     public function register()

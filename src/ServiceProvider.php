@@ -27,6 +27,7 @@ class ServiceProvider extends IlluminateServiceProvider
         });
 
         Route::mixin(new RouteMethods);
+        Request::mixin(new RequestMethods);
 
         if (! $this->app->runningInConsole()) {
             return;

@@ -14,6 +14,7 @@ class DecorateURL
 
     public static function decorateUrlFromFirstTouch(string $url, array $params = []): string
     {
+        /** @var ParameterTracker $parameterTracker */
         $parameterTracker = app(ParameterTracker::class);
 
         $analyticsParameters = array_merge(
@@ -26,6 +27,7 @@ class DecorateURL
 
     public static function decorateUrlFromLastTouch(string $url, array $params = []): string
     {
+        /** @var ParameterTracker $parameterTracker */
         $parameterTracker = app(ParameterTracker::class);
 
         $analyticsParameters = array_merge(
@@ -38,6 +40,7 @@ class DecorateURL
 
     public static function decorateUrlFromCurrent(string $url, array $params = []): string
     {
+        /** @var ParameterTracker $parameterTracker */
         $parameterTracker = app(ParameterTracker::class);
 
         $analyticsParameters = array_merge(

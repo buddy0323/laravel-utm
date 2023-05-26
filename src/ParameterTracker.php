@@ -2,23 +2,22 @@
 
 namespace Adzbuck\LaravelUTM;
 
-use Illuminate\Contracts\Session\Session;
+use Adzbuck\LaravelUTM\Helpers\Store;
 use Illuminate\Http\Request;
 
 class ParameterTracker
 {
     public function __construct(
         protected Request $request,
-        protected Session $session,
         protected array $trackedParameters,
-        protected string|false $firstTouchSessionKey,
-        protected string|false $lastTouchSessionKey,
+        protected string|false $firstTouchKey,
+        protected string|false $lastTouchKey,
     ) {
     }
 
     public function handle(): void
     {
-        if (! $this->firstTouchSessionKey && ! $this->lastTouchSessionKey) {
+        if (! $this->firstTouchKey && ! $this->lastTouchKey) {
             return;
         }
 
@@ -30,23 +29,23 @@ class ParameterTracker
             return;
         }
 
-        if ($this->firstTouchSessionKey && ! $currentParameters) {
-            $this->session->put($this->firstTouchSessionKey, $parameters);
+        if ($this->firstTouchKey && ! $currentParameters) {
+            Store::set($this->firstTouchKey, $parameters);
         }
 
-        if ($this->lastTouchSessionKey) {
-            $this->session->put($this->lastTouchSessionKey, $parameters);
+        if ($this->lastTouchKey) {
+            Store::set($this->lastTouchKey, $parameters);
         }
     }
 
     public function getFirstTouch(): array
     {
-        return $this->session->get($this->firstTouchSessionKey, []);
+        return Store::get($this->firstTouchKey, []);
     }
 
     public function getLastTouch(): array
     {
-        return $this->session->get($this->lastTouchSessionKey, []);
+        return Store::get($this->lastTouchKey, []);
     }
 
     public function getCurrent(): array

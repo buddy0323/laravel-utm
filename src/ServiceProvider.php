@@ -2,12 +2,11 @@
 
 namespace Adzbuck\LaravelUTM;
 
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Route;
 use Adzbuck\LaravelUTM\ParameterTracker;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 class ServiceProvider extends IlluminateServiceProvider
@@ -48,14 +47,13 @@ class ServiceProvider extends IlluminateServiceProvider
         $this->app->singleton(ParameterTracker::class, function ($app) {
             return new ParameterTracker(
                 $app->make(Request::class),
-                $app->make(Session::class),
                 config('laravel-utm.tracked_parameters'),
-                config('laravel-utm.first_touch_session_key'),
-                config('laravel-utm.last_touch_session_key'),
+                config('laravel-utm.first_touch_store_key'),
+                config('laravel-utm.last_touch_store_key'),
             );
         });
 
-        $this->app->singleton('laravelUTM', fn() => new LaravelUTM);
-        $this->app->booting(fn() => AliasLoader::getInstance()->alias('LaravelUTM', LaravelUTM::class));
+        $this->app->singleton('laravelUTM', fn () => new LaravelUTM);
+        $this->app->booting(fn () => AliasLoader::getInstance()->alias('LaravelUTM', LaravelUTM::class));
     }
 }

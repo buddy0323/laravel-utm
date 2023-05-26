@@ -2,9 +2,9 @@
 
 namespace Adzbuck\LaravelUTM\Tests\Views\Directives;
 
+use Adzbuck\LaravelUTM\Helpers\Store;
 use Illuminate\Http\Request;
 use Adzbuck\LaravelUTM\Tests\TestCase;
-use Illuminate\Support\Facades\Session;
 use Adzbuck\LaravelUTM\DecorateURL;
 
 class DecorateURLTest extends TestCase
@@ -18,14 +18,14 @@ class DecorateURLTest extends TestCase
     {
         parent::setUp();
 
-        Session::put(
-            config('laravel-utm.first_touch_session_key'),
+        Store::set(
+            config('laravel-utm.first_touch_store_key'),
             [
                 'utm_source' => self::$firstTouchSource,
             ]
         );
-        Session::put(
-            config('laravel-utm.last_touch_session_key'),
+        Store::set(
+            config('laravel-utm.last_touch_store_key'),
             [
                 'utm_source' => self::$lastTouchSource,
             ]

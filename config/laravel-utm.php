@@ -1,7 +1,13 @@
 <?php
 use Adzbuck\LaravelUTM\Sources;
+use Adzbuck\LaravelUTM\StoreType;
 
 return [
+    /**
+     * How the data will be stored
+     */
+    'store' => StoreType::Cookie,
+
     /*
      * These are the analytics parameters that will be tracked when a user first visits
      * the application. The configuration consists of the parameter's key and the
@@ -37,14 +43,19 @@ return [
     ],
 
     /**
+     * The name of the cooke that will be set
+     */
+    'cookie_name' => 'utm_params',
+
+    /**
      * We'll put the first touch tracked parameters in the session using this key.
      */
-    'first_touch_session_key' => 'laravel_utm_parameters_first',
+    'first_touch_store_key' => 'laravel_utm_parameters_first',
 
     /**
      * We'll put the last touch tracked parameters in the session using this key.
      */
-    'last_touch_session_key' => 'laravel_utm_parameters_last',
+    'last_touch_store_key' => 'laravel_utm_parameters_last',
 
     /**
      * If we should keep track of the first touch utm params

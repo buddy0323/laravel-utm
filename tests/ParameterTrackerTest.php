@@ -2,6 +2,7 @@
 
 namespace Adzbuck\LaravelUTM\Tests;
 
+use Adzbuck\LaravelUTM\Helpers\Store;
 use Illuminate\Http\Request;
 use Adzbuck\LaravelUTM\Tests\TestCase;
 use Adzbuck\LaravelUTM\ParameterTracker;
@@ -30,7 +31,7 @@ class ParameterTrackerTest extends TestCase
             [
                 'utm_source' => 'https://google.com/',
             ],
-            session()->get(config('laravel-utm.first_touch_session_key'))
+            Store::get(config('laravel-utm.first_touch_store_key'))
         );
     }
 
@@ -47,15 +48,15 @@ class ParameterTrackerTest extends TestCase
             }
         );
 
-        config()->set('laravel-utm.first_touch_session_key', false);
-        config()->set('laravel-utm.last_touch_session_key', false);
+        config()->set('laravel-utm.first_touch_store_key', false);
+        config()->set('laravel-utm.last_touch_store_key', false);
 
         /** @var ParameterTracker */
         $app = app(ParameterTracker::class);
         $app->handle();
 
         $this->assertNull(
-            session()->get(config('laravel-utm.first_touch_session_key'))
+            session()->get(config('laravel-utm.first_touch_store_key'))
         );
     }
 
@@ -67,7 +68,7 @@ class ParameterTrackerTest extends TestCase
         $app->handle();
 
         $this->assertNull(
-            session()->get(config('laravel-utm.first_touch_session_key'))
+            session()->get(config('laravel-utm.first_touch_store_key'))
         );
     }
 
@@ -99,7 +100,7 @@ class ParameterTrackerTest extends TestCase
             [
                 'custom_tracked' => 'https://google.com/',
             ],
-            session()->get(config('laravel-utm.first_touch_session_key'))
+            Store::get(config('laravel-utm.first_touch_store_key'))
         );
     }
 
@@ -124,7 +125,7 @@ class ParameterTrackerTest extends TestCase
             [
                 'referer' => 'spatie.be',
             ],
-            session()->get(config('laravel-utm.first_touch_session_key'))
+            Store::get(config('laravel-utm.first_touch_store_key'))
         );
     }
 }

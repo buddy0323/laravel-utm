@@ -55,7 +55,7 @@ class ServiceProvider extends IlluminateServiceProvider
             );
         });
 
-        $this->app->singleton('laravelUTM', fn() => new laravelUTM);
-        $this->app->booting(fn() => AliasLoader::getInstance()->alias('laravelUTM', laravelUTM::class));
+        $this->app->singleton('laravelUTM', fn() => new LaravelUTM);
+        $this->app->booting(fn() => AliasLoader::getInstance()->alias('LaravelUTM', LaravelUTM::class));
     }
 }

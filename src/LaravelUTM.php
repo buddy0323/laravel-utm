@@ -4,7 +4,7 @@ namespace Adzbuck\LaravelUTM;
 
 use Illuminate\Support\Facades\Facade;
 
-class laravelUTM extends Facade
+class LaravelUTM extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,7 +13,7 @@ class laravelUTM extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'laravelUTM';
+        return 'LaravelUTM';
     }
 
     /**

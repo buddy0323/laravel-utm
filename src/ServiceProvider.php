@@ -2,6 +2,7 @@
 
 namespace Adzbuck\LaravelUTM;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Route;
 use Adzbuck\LaravelUTM\ParameterTracker;
 use Illuminate\Contracts\Session\Session;
@@ -26,6 +27,8 @@ class ServiceProvider extends IlluminateServiceProvider
             return "<?php echo \Adzbuck\LaravelUTM\DecorateURL::decorateUrlFromCurrent({$expression}); ?>";
         });
 
+        Route::mixin(new RouteMethods);
+
         if (! $this->app->runningInConsole()) {
             return;
         }
@@ -36,8 +39,6 @@ class ServiceProvider extends IlluminateServiceProvider
             ],
             'config'
         );
-
-        Route::mixin(new RouteMethods);
     }
 
     public function register(): void
@@ -54,10 +55,7 @@ class ServiceProvider extends IlluminateServiceProvider
             );
         });
 
-        $this->app->bind('laravelUTM', function() {
-            return new laravelUTM;
-        });
-
-        $this->app->alias('laravelUTM', laravelUTM::class);
+        $this->app->singleton('laravelUTM', fn() => new laravelUTM);
+        $this->app->booting(fn() => AliasLoader::getInstance()->alias('laravelUTM', laravelUTM::class));
     }
 }

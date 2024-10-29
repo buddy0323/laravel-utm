@@ -48,6 +48,16 @@ return [
     'cookie_name' => 'utm_params',
 
     /**
+     * Cookie secure flag
+     */
+    'cookie_secure' => null,
+
+    /**
+     * Cookie http flag
+     */
+    'cookie_http_only' => true,
+
+    /**
      * We'll put the first touch tracked parameters in the session using this key.
      */
     'first_touch_store_key' => 'laravel_utm_parameters_first',

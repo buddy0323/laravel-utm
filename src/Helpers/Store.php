@@ -25,7 +25,7 @@ class Store
                 $cookieName = config('laravel-utm.cookie_name');
                 $cookieData = self::getCookie() ?? [];
                 $cookieData[$key] = $value;
-                Cookie::queue($cookieName, json_encode($cookieData));
+                Cookie::queue($cookieName, json_encode($cookieData), 0, null, null, config('laravel-utm.cookie_secure'), config('laravel-utm.cookie_http_only'));
 
                 return;
         }

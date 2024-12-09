@@ -7,7 +7,6 @@ class RequestMixin
     public function __construct(
         protected ParameterTracker $parameterTracker,
     ) {
-
     }
 
     public function getFirstTouch(): array

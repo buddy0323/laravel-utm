@@ -3,7 +3,6 @@
 .php-cs-fixer.cache
 .phpunit.result.cache
 .phpunit.cache
-.vscode
 build
 composer.lock
 coverage
@@ -11,3 +10,7 @@ docs
 phpunit.xml
 psalm.xml
 vendor
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore

@@ -8,8 +8,7 @@ use Adzbuck\LaravelUTM\Sources\RequestParameter;
 
 class RequestParameterTest extends TestCase
 {
-    /** @test */
-    public function it_can_get_a_request_parameter()
+    public function testItCanGetARequestParameter()
     {
         $request = new Request([
             'foo' => 'bar',

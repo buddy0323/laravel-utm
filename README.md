@@ -5,6 +5,11 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/adzbuck/laravel-utm/run-tests.yml?label=Tests)](https://github.com/adzbuck/laravel-utm/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/adzbuck/laravel-utm.svg?style=flat-square)](https://packagist.org/packages/adzbuck/laravel-utm)
 
+
+### Support:
+- PHP: 8.0, 8.1, 8.2, 8.3, 8.4
+- Laravel: 9, 10, 11, 12
+
 This package allows you to easily track first and last touch query parameters and headers via session. You can then easily access these parameters so you can add them to a form submission or a link to another domain you track.
 
 ## Installation

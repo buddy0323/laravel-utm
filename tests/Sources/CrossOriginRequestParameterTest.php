@@ -8,8 +8,7 @@ use Adzbuck\LaravelUTM\Sources\CrossOriginRequestParameter;
 
 class CrossOriginRequestParameterTest extends TestCase
 {
-    /** @test */
-    public function it_can_get_a_request_parameter_if_the_request_was_cross_origin()
+    public function testItCanGetARequestParameterIfTheRequestWasCrossOrigin()
     {
         $request = new Request([
             'foo' => 'bar',
@@ -19,8 +18,7 @@ class CrossOriginRequestParameterTest extends TestCase
         $this->assertEquals('bar', (new CrossOriginRequestParameter($request))->get('foo'));
     }
 
-    /** @test */
-    public function it_cant_get_a_request_parameter_if_the_request_was_not_cross_origin()
+    public function testItCantGetARequestParameterIfTheRequestWasNotCrossOrigin()
     {
         $request = new Request([
             'foo' => 'bar',

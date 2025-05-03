@@ -12,13 +12,12 @@ class Store
         array|string $key,
         mixed $value = null,
     ): void {
-        /** @var StoreType */
+        /** @var StoreType $storeType */
         $storeType = config('laravel-utm.store');
 
         switch($storeType) {
             case StoreType::Session:
                 Session::put($key, $value);
-
                 return;
             case StoreType::Cookie:
             default:
@@ -26,8 +25,6 @@ class Store
                 $cookieData = self::getCookie() ?? [];
                 $cookieData[$key] = $value;
                 Cookie::queue($cookieName, json_encode($cookieData), 0, null, null, config('laravel-utm.cookie_secure'), config('laravel-utm.cookie_http_only'));
-
-                return;
         }
     }
 
@@ -35,20 +32,17 @@ class Store
         array|string $key,
         mixed $default = null,
     ): mixed {
-        /** @var StoreType */
+        /** @var StoreType::Session|StoreType::Cookie $storeType */
         $storeType = config('laravel-utm.store');
-        switch($storeType) {
-            case StoreType::Session:
-                return Session::get($key, $default);
-            case StoreType::Cookie:
-            default:
-                return self::getCookie()[$key] ?? $default;
-        }
+        return match ($storeType) {
+            StoreType::Session => Session::get($key, $default),
+            default => self::getCookie()[$key] ?? $default,
+        };
     }
 
     protected static function getCookie(): mixed
     {
-        /** @var string */
+        /** @var string $cookieName */
         $cookieName = config('laravel-utm.cookie_name');
         $content = Cookie::get($cookieName) ?? Cookie::queued($cookieName)?->getValue();
 

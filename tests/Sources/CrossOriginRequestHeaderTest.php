@@ -8,8 +8,7 @@ use Adzbuck\LaravelUTM\Sources\CrossOriginRequestHeader;
 
 class CrossOriginRequestHeaderTest extends TestCase
 {
-    /** @test */
-    public function it_can_get_a_request_header_if_the_request_was_cross_origin()
+    public function testItCanGetARequestHeaderIfTheRequestWasCrossOrigin()
     {
         $request = new Request();
         $request->headers->set('Foo', 'bar');
@@ -18,8 +17,7 @@ class CrossOriginRequestHeaderTest extends TestCase
         $this->assertEquals('bar', (new CrossOriginRequestHeader($request))->get('foo'));
     }
 
-    /** @test */
-    public function it_cant_get_a_request_header_if_the_request_was_not_cross_origin()
+    public function testItCantGetARequestHeaderIfTheRequestWasNotCrossOrigin()
     {
         $request = new Request();
         $request->headers->set('Foo', 'bar');

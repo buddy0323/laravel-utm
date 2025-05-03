@@ -1,28 +1,46 @@
 name: Tests
 
-on: ['push', 'pull_request']
+on: [pull_request]
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest]
-        php: [8.1,8.2]
-        laravel: [9.*, 10.*]
+        php: [8.0,8.1,8.2,8.3,8.4]
+        laravel: [9.*, 10.*, 11.*, 12.*]
         stability: [prefer-lowest, prefer-stable]
         include:
+          - laravel: 12.*
+            contracts: 12.*
+            testbench: 10.*
+            phpunit: ^11.5.3
+          - laravel: 11.*
+            contracts: 11.*
+            testbench: 9.*
+            phpunit: ^11.0.1
           - laravel: 10.*
             contracts: 10.*
             testbench: 8.*
-            phpunit: 10.*
+            phpunit: ^10.1
           - laravel: 9.*
             contracts: 9.*
             testbench: 7.*
-            phpunit: 9.*
+            phpunit: ^9.5.10
+        exclude:
+          - laravel: 10.*
+            php: 8.0
+          - laravel: 11.*
+            php: 8.0
+          - laravel: 11.*
+            php: 8.1
+          - laravel: 12.*
+            php: 8.0
+          - laravel: 12.*
+            php: 8.1
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
 
     steps:
       - name: Checkout code
@@ -37,6 +55,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer remove --dev vimeo/psalm friendsofphp/php-cs-fixer
           composer require "laravel/framework:${{ matrix.laravel }}" "phpunit/phpunit:${{ matrix.phpunit }}" "illuminate/contracts:${{ matrix.contracts }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 

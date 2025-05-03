@@ -8,8 +8,7 @@ use Adzbuck\LaravelUTM\Sources\RequestHeader;
 
 class RequestHeaderTest extends TestCase
 {
-    /** @test */
-    public function it_can_get_a_request_header()
+    public function testItCanGetARequestHeader()
     {
         $request = new Request();
         $request->headers->set('Foo', 'bar');

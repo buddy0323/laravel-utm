@@ -2,8 +2,8 @@
 
 namespace Adzbuck\LaravelUTM;
 
-enum StoreType
+class StoreType
 {
-    case Session;
-    case Cookie;
+    public const Session = 'session';
+    public const Cookie = 'cookie';
 }

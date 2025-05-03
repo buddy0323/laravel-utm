@@ -11,10 +11,10 @@ class BladeDirectivesTest extends TestCase
 {
     use InteractsWithViews;
 
-    private static $host = 'https://localhost/';
-    private static $firstTouchSource = 'https://laravel-news.com/';
-    private static $lastTouchSource = 'https://laravel.com/';
-    private static $currentSource = 'https://google.com/';
+    private static string $host = 'https://localhost/';
+    private static string $firstTouchSource = 'https://laravel-news.com/';
+    private static string $lastTouchSource = 'https://laravel.com/';
+    private static string $currentSource = 'https://google.com/';
 
     protected function setUp(): void
     {
@@ -43,24 +43,21 @@ class BladeDirectivesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_format_an_url()
+    public function testItCanFormatAnUrl()
     {
         $formattedUrl = $this->blade('@trackedUrl(\'' . self::$host . '\')');
 
         $this->assertEquals(self::$host, (string)$formattedUrl);
     }
 
-    /** @test */
-    public function it_can_format_an_url_with_extra_parameters()
+    public function testItCanFormatAnUrlWithExtraParameters()
     {
         $formattedUrl = $this->blade('@trackedUrl(\'' . self::$host . '\', [\'utm_source\' => \'test\' ])');
 
         $this->assertEquals(self::$host . '?utm_source=test', (string)$formattedUrl);
     }
 
-    /** @test */
-    public function it_can_format_an_url_from_first_touch_parameters()
+    public function testItCanFormatAnUrlFromFirstTouchParameters()
     {
         $formattedUrl = $this->blade('@trackedUrlFromFirstTouch(\'' . self::$host . '\')');
 
@@ -72,8 +69,7 @@ class BladeDirectivesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_format_an_url_from_first_touch_parameters_with_extra_params()
+    public function testItCanFormatAnUrlFromFirstTouchParametersWithExtraParams()
     {
         $formattedUrl = $this->blade('@trackedUrlFromFirstTouch(\'' . self::$host . '\', [\'utm_term\' => \'test\'])');
 
@@ -86,8 +82,7 @@ class BladeDirectivesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_format_an_url_from_last_touch_parameters()
+    public function testItCanFormatAnUrlFromLastTouchParameters()
     {
         $formattedUrl = $this->blade('@trackedUrlFromLastTouch(\'' . self::$host . '\')');
 
@@ -99,8 +94,7 @@ class BladeDirectivesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_format_an_url_from_last_touch_parameters_with_extra_params()
+    public function testItCanFormatAnUrlFromLastTouchParametersWithExtraParams()
     {
         $formattedUrl = $this->blade('@trackedUrlFromLastTouch(\'' . self::$host . '\', [\'utm_term\' => \'test\'])');
 
@@ -113,8 +107,7 @@ class BladeDirectivesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_format_an_url_from_current_parameters()
+    public function testItCanFormatAnUrlFromCurrentParameters()
     {
         $formattedUrl = $this->blade('@trackedUrlFromCurrent(\'' . self::$host . '\')');
 
@@ -126,8 +119,7 @@ class BladeDirectivesTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_format_an_url_from_current_parameters_with_extra_params()
+    public function testItCanFormatAnUrlFromCurrentParametersWithExtraParams()
     {
         $formattedUrl = $this->blade('@trackedUrlFromCurrent(\'' . self::$host . '\', [\'utm_term\' => \'test\'])');
 

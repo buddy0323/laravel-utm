@@ -10,8 +10,7 @@ use Adzbuck\LaravelUTM\Sources\RequestParameter;
 
 class ParameterTrackerTest extends TestCase
 {
-    /** @test */
-    public function it_can_get_the_tracked_parameters_from_a_request()
+    public function testItCanGetTheTrackedParametersFromARequest()
     {
         app()->bind(
             Request::class,
@@ -23,9 +22,9 @@ class ParameterTrackerTest extends TestCase
             }
         );
 
-        /** @var ParameterTracker */
-        $app = app(ParameterTracker::class);
-        $app->handle();
+        /** @var ParameterTracker $parameterTracker */
+        $parameterTracker = app(ParameterTracker::class);
+        $parameterTracker->handle();
 
         $this->assertEquals(
             [
@@ -35,8 +34,7 @@ class ParameterTrackerTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_returns_when_tracking_disabled_request()
+    public function testItReturnsWhenTrackingDisabledRequest()
     {
         app()->bind(
             Request::class,
@@ -51,29 +49,27 @@ class ParameterTrackerTest extends TestCase
         config()->set('laravel-utm.first_touch_store_key', false);
         config()->set('laravel-utm.last_touch_store_key', false);
 
-        /** @var ParameterTracker */
-        $app = app(ParameterTracker::class);
-        $app->handle();
+        /** @var ParameterTracker $parameterTracker */
+        $parameterTracker = app(ParameterTracker::class);
+        $parameterTracker->handle();
 
         $this->assertNull(
             session()->get(config('laravel-utm.first_touch_store_key'))
         );
     }
 
-    /** @test */
-    public function it_returns_when_no_params_from_a_request()
+    public function testItReturnsWhenNoParamsFromARequest()
     {
-        /** @var ParameterTracker */
-        $app = app(ParameterTracker::class);
-        $app->handle();
+        /** @var ParameterTracker $parameterTracker */
+        $parameterTracker = app(ParameterTracker::class);
+        $parameterTracker->handle();
 
         $this->assertNull(
             session()->get(config('laravel-utm.first_touch_store_key'))
         );
     }
 
-    /** @test */
-    public function it_can_get_custom_configured_tracked_parameters_from_a_request()
+    public function testItCanGetCustomConfiguredTrackedParametersFromARequest()
     {
         app()->bind(
             Request::class,
@@ -92,9 +88,9 @@ class ParameterTrackerTest extends TestCase
             ],
         ]);
 
-        /** @var ParameterTracker */
-        $app = app(ParameterTracker::class);
-        $app->handle();
+        /** @var ParameterTracker $parameterTracker */
+        $parameterTracker = app(ParameterTracker::class);
+        $parameterTracker->handle();
 
         $this->assertEquals(
             [
@@ -104,8 +100,7 @@ class ParameterTrackerTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_track_the_referer_header()
+    public function testItCanTrackTheRefererHeader()
     {
         app()->bind(
             Request::class,
@@ -117,9 +112,9 @@ class ParameterTrackerTest extends TestCase
             }
         );
 
-        /** @var ParameterTracker */
-        $app = app(ParameterTracker::class);
-        $app->handle();
+        /** @var ParameterTracker $parameterTracker */
+        $parameterTracker = app(ParameterTracker::class);
+        $parameterTracker->handle();
 
         $this->assertEquals(
             [

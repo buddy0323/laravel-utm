@@ -1,10 +1,6 @@
 name: Psalm
 
-on:
-  push:
-    paths:
-      - '**.php'
-      - 'psalm.xml.dist'
+on: [pull_request]
 
 jobs:
   psalm:
@@ -16,18 +12,14 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.0'
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
           coverage: none
 
-      - name: Cache composer dependencies
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: composer-${{ hashFiles('composer.lock') }}
-
       - name: Run composer install
-        run: composer install -n --prefer-dist
+        run: |
+          composer require "laravel/framework:9.*" "phpunit/phpunit:^9.5.10" "illuminate/contracts:9.*" "orchestra/testbench:7.*" --no-interaction --no-update
+          composer install -n --prefer-dist
 
       - name: Run psalm
         run: ./vendor/bin/psalm

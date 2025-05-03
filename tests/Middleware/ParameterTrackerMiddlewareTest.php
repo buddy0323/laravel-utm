@@ -9,8 +9,7 @@ use Adzbuck\LaravelUTM\Middleware\ParameterTrackerMiddleware;
 
 class ParameterTrackerMiddlewareTest extends TestCase
 {
-    /** @test */
-    public function it_tries_to_add_any_analytics_parameters_to_the_analytics_bag()
+    public function testItTriesToAddAnyAnalyticsParametersToTheAnalyticsBag()
     {
         $request = new Request();
 
@@ -18,7 +17,7 @@ class ParameterTrackerMiddlewareTest extends TestCase
             ->expects('handle')
             ->once();
 
-        /** @var ParameterTrackerMiddleware */
+        /** @var ParameterTrackerMiddleware $middleware */
         $middleware = app(ParameterTrackerMiddleware::class);
         $middleware->handle($request, fn (Request $request) => $request);
     }
